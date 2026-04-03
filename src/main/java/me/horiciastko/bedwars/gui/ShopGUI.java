@@ -633,7 +633,8 @@ public class ShopGUI extends BaseGUI {
                 BedWars.getInstance().getGameManager().giveStartingKit(player, team);
             } else if (xMat.name().endsWith("_BOOTS") && (xMat.name().contains("CHAIN") || xMat.name().contains("IRON")
                     || xMat.name().contains("DIAMOND"))) {
-                String tier = xMat.name().split("_")[0];
+                String rawTier = xMat.name().split("_")[0];
+                String tier = rawTier.equals("CHAINMAIL") ? "CHAIN" : rawTier;
                 BedWars.getInstance().getGameManager().setPlayerArmorTier(player, tier);
             } else {
                 player.getInventory().addItem(giving);

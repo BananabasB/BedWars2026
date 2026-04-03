@@ -72,8 +72,11 @@ public class GameListener implements Listener {
         }
 
         Arena arena = BedWars.getInstance().getArenaManager().getPlayerArena(player);
-        if (arena == null || arena.getState() != Arena.GameState.IN_GAME) {
+        if (arena != null && arena.getState() != Arena.GameState.IN_GAME) {
             event.setCancelled(true);
+            return;
+        }
+        if (arena == null) {
             return;
         }
 
@@ -215,8 +218,11 @@ public class GameListener implements Listener {
         }
 
         Arena arena = BedWars.getInstance().getArenaManager().getPlayerArena(player);
-        if (arena == null || arena.getState() != Arena.GameState.IN_GAME) {
+        if (arena != null && arena.getState() != Arena.GameState.IN_GAME) {
             event.setCancelled(true);
+            return;
+        }
+        if (arena == null) {
             return;
         }
 
@@ -575,7 +581,7 @@ public class GameListener implements Listener {
         }
 
         if (!BedWars.getInstance().getGameManager().isInBuildMode(player) &&
-                (arena == null || arena.getState() != Arena.GameState.IN_GAME)) {
+                (arena != null && arena.getState() != Arena.GameState.IN_GAME)) {
             if (event.getClickedBlock() != null && event.getClickedBlock().getType().isInteractable()) {
                 if (!event.getClickedBlock().getType().name().contains("SIGN")) {
                     event.setCancelled(true);
