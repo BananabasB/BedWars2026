@@ -178,3 +178,13 @@ Found a bug or have a feature request? Feel free to:
 - Suggest new features or improvements
 
 Your feedback helps make this plugin better!
+
+## Attribution
+
+This project is derived from [BedWars1058](https://github.com/andrei1058/BedWars1058) by [andrei1058](https://github.com/andrei1058).
+
+BedWars1058 is licensed under the [GNU General Public License v3.0](https://github.com/andrei1058/BedWars1058/blob/master/LICENSE). In accordance with the GPL v3.0, this project is also distributed under the same license. See [LICENSE](LICENSE) for the full license text.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 — see the [LICENSE](LICENSE) file for details.
