@@ -226,17 +226,37 @@ public class GameListener implements Listener {
             return;
         }
 
+        Team playerTeam = BedWars.getInstance().getGameManager().getPlayerTeam(arena, player);
+
+        // Check if block is in any team's base
+        boolean isInOwnBase = false;
+        boolean isInEnemyBase = false;
+        Team enemyBaseTeam = null;
+
         for (Team t : arena.getTeams()) {
             if (t.getBasePos1() != null && t.getBasePos2() != null) {
                 if (isInside(event.getBlock().getLocation(), t.getBasePos1(), t.getBasePos2())) {
-                    event.setCancelled(true);
-                    player.sendMessage(BedWars.getInstance().getLanguageManager().getMessage(
-                            player.getUniqueId(), "interact-cant-build-in-base")
-                            .replace("%color%", t.getColor().toString())
-                            .replace("%team%", t.getDisplayName()));
-                    return;
+                    if (playerTeam != null && playerTeam.getName().equals(t.getName())) {
+                        // Building in own base - allow it
+                        isInOwnBase = true;
+                        break;
+                    } else {
+                        // Building in enemy base - block it
+                        isInEnemyBase = true;
+                        enemyBaseTeam = t;
+                        break;
+                    }
                 }
             }
+        }
+
+        if (isInEnemyBase) {
+            event.setCancelled(true);
+            player.sendMessage(BedWars.getInstance().getLanguageManager().getMessage(
+                    player.getUniqueId(), "interact-cant-build-in-base")
+                    .replace("%color%", enemyBaseTeam.getColor().toString())
+                    .replace("%team%", enemyBaseTeam.getDisplayName()));
+            return;
         }
 
         for (org.bukkit.Location loc : arena.getDiamondGenerators()) {
@@ -257,7 +277,6 @@ public class GameListener implements Listener {
         }
 
         if (event.getBlock().getType() == Material.TNT) {
-            Team playerTeam = BedWars.getInstance().getGameManager().getPlayerTeam(arena, player);
             if (playerTeam != null) {
                 for (Team t : arena.getTeams()) {
                     if (!t.getName().equals(playerTeam.getName())) {
